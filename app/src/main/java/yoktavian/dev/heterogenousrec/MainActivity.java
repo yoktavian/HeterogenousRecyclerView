@@ -160,14 +160,14 @@ public class MainActivity extends AppCompatActivity {
             return this;
         }
 
-        // Set Horizontal Recyclerview type 0
+        // Set Horizontal Recyclerview Type Standard
         public KategoriHolder setListBarang() {
             adapterHorizontal = new AdapterHorizontal(Type.STANDARD);
             mListBarang.setAdapter(adapterHorizontal);
             return this;
         }
 
-        // Set Horizontal Recyclerview type 1
+        // Set Horizontal Recyclerview Type Popular
         public KategoriHolder setListBarangPop() {
             adapterHorizontal = new AdapterHorizontal(Type.POPULAR);
             mListBarang.setAdapter(adapterHorizontal);
