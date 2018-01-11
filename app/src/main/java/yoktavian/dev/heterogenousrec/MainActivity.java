@@ -158,14 +158,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Set Horizontal Recyclerview type 0
         public KategoriHolder setListBarang() {
-            adapterHorizontal = new AdapterHorizontal(0);
+            adapterHorizontal = new AdapterHorizontal(Type.STANDARD);
             mListBarang.setAdapter(adapterHorizontal);
             return this;
         }
 
         // Set Horizontal Recyclerview type 1
         public KategoriHolder setListBarangPop() {
-            adapterHorizontal = new AdapterHorizontal(1);
+            adapterHorizontal = new AdapterHorizontal(Type.POPULAR);
             mListBarang.setAdapter(adapterHorizontal);
             return this;
         }
@@ -248,19 +248,19 @@ public class MainActivity extends AppCompatActivity {
     // Adapter Horizontal
     class AdapterHorizontal extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        private int type;
+        private Type type;
 
         /**
          *
          * @param type
          */
-        public AdapterHorizontal(int type) {
+        public AdapterHorizontal(Type type) {
             this.type = type;
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            if (type == 0) {
+            if (type == Type.STANDARD) {
                 return new BarangHolder(parent);
             } else {
                 return new PopulerHolder(parent);
@@ -288,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (type == 0) {
+                    if (type == Type.STANDARD) {
                         Toast.makeText(holder.itemView.getContext(),
                                 String.valueOf(listBarang.get(holder.getAdapterPosition())
                                         .toString()), Toast.LENGTH_SHORT).show();
@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            if (type == 0) {
+            if (type == Type.STANDARD) {
                 return listBarang.size();
             } else {
                 return listBarangPop.size();
