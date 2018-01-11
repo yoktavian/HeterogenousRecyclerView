@@ -96,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    enum Type {
+        POPULAR, STANDARD
+    }
+
     // Vertical Adapter
     class AdapterKategori extends RecyclerView.Adapter<KategoriHolder> {
 
@@ -133,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Vertical Holder
+    // Vertical Holder Kategori
     class KategoriHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.value_kategori)
@@ -172,11 +176,76 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    enum Type {
-        POPULAR, STANDARD
+    // Adapter Horizontal
+    class AdapterHorizontal extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+        private Type type;
+
+        /**
+         *
+         * @param type
+         */
+        public AdapterHorizontal(Type type) {
+            this.type = type;
+        }
+
+        @Override
+        public int getItemCount() {
+            if (type == Type.STANDARD) {
+                return listBarang.size();
+            } else {
+                return listBarangPop.size();
+            }
+        }
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            if (type == Type.STANDARD) {
+                return new BarangHolder(parent);
+            } else {
+                return new PopulerHolder(parent);
+            }
+        }
+
+        @Override
+        public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+            if (holder instanceof BarangHolder) {
+                final BarangModel item = listBarang.get(holder.getAdapterPosition());
+                final BarangHolder barangHolder = (BarangHolder) holder;
+
+                barangHolder
+                        .setId(item.get_id())
+                        .setName(item.getName())
+                        .setDesc(item.getDesc());
+
+            } else if (holder instanceof PopulerHolder) {
+                final BarangPopulerModel item = listBarangPop.get(holder.getAdapterPosition());
+                final PopulerHolder populerHolder = (PopulerHolder) holder;
+
+                populerHolder
+                        .setId(item.get_id())
+                        .setName(item.getName())
+                        .setDesc(item.getDesc());
+            }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (type == Type.STANDARD) {
+                        Toast.makeText(holder.itemView.getContext(),
+                                String.valueOf(listBarang.get(holder.getAdapterPosition())
+                                        .toString()), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(holder.itemView.getContext(),
+                                String.valueOf(listBarangPop.get(holder.getAdapterPosition())
+                                        .toString()), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 
-    // Horizontal Holder
+    // Horizontal Holder Populer
     class PopulerHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.id_item)
@@ -211,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // Horizontal Holder
+    // Horizontal Holder Standard
     class BarangHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.id_item)
@@ -245,70 +314,5 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Adapter Horizontal
-    class AdapterHorizontal extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-        private Type type;
-
-        /**
-         *
-         * @param type
-         */
-        public AdapterHorizontal(Type type) {
-            this.type = type;
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            if (type == Type.STANDARD) {
-                return new BarangHolder(parent);
-            } else {
-                return new PopulerHolder(parent);
-            }
-        }
-
-        @Override
-        public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-            if (holder instanceof BarangHolder) {
-                final BarangModel item = listBarang.get(position);
-                final BarangHolder barangHolder = (BarangHolder) holder;
-                barangHolder
-                        .setId(item.get_id())
-                        .setName(item.getName())
-                        .setDesc(item.getDesc());
-
-            } else if (holder instanceof PopulerHolder) {
-                final PopulerHolder populerHolder = (PopulerHolder) holder;
-                populerHolder
-                        .setId(listBarangPop.get(position).get_id())
-                        .setName(listBarangPop.get(position).getName())
-                        .setDesc(listBarangPop.get(position).getDesc());
-            }
-
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (type == Type.STANDARD) {
-                        Toast.makeText(holder.itemView.getContext(),
-                                String.valueOf(listBarang.get(holder.getAdapterPosition())
-                                        .toString()), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(holder.itemView.getContext(),
-                                String.valueOf(listBarangPop.get(holder.getAdapterPosition())
-                                        .toString()), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            if (type == Type.STANDARD) {
-                return listBarang.size();
-            } else {
-                return listBarangPop.size();
-            }
-        }
-    }
 
 }
