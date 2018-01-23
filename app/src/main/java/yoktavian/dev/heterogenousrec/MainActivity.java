@@ -280,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    // Horizontal Holder Standard Nih Brok
+    // Horizontal Holder Standard Nih Brok 123
     class BarangHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.id_item)
